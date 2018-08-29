@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css盒模型</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 父元素的高度为220px：100+100+20=220px -->
+    <!-- 当兄弟间都有margin值时，取最大的值即可。 -->
+    <section id="ec">
+        <style>
+            .children1{
+                height: 100px;
+                margin-bottom: 10px;
+                background-color: blue;
+            }
+            .children2{
+                height: 100px;
+                margin-top: 20px;
+                background-color: red;
+            }
+        </style>
+        <article class="children1">
+        </article>
+        <article class="children2">
+        </article>
+    </section>
+</body>
+</html>

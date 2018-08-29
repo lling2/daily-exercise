@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css盒模型</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1.1BFC垂直方向边距重叠 -->
+    <!-- 可以给子元素添加BFC 来消除边距重叠 高度变为45px-->
+    <section id="margin">
+        <style>
+            #margin{
+                overflow: hidden;/*给父元素创建BFC*/
+                background-color: red;
+            }
+            #margin>p{
+                margin: 5px auto 20px;
+                background-color: blue;
+            }
+        </style>
+        <p>1</p>
+        <div style="overflow: hidden;">
+            <p>2</p>
+        </div>
+        <p>3</p>
+    </section>
+
+    <!-- 1.2BFC不与float重叠 -->
+    <section id="layout">
+        <style>
+            #layout{
+                background-color: red;
+            }
+            #layout .left{
+                float: left;
+                width: 100px;
+                height: 100px;
+                background-color: blue;
+            }
+            #layout .right{
+                height: 110px;
+                background-color: green;
+                overflow: hidden;/*给元素创建BFC*/
+            }
+        </style>
+        <div class="left"></div>
+        <div class="right"></div>
+    </section>
+
+    <!-- 1.3BFC子元素float也会参与到高度的计算 -->
+    <!--  -->
+    <section id="float">
+        <style>
+            #float{
+                background-color: red;
+                overflow: hidden;/*创建BFC 可见高度*/
+            }
+            .float{
+                float: left;
+                font-size: 12px;
+            }
+        </style>
+        <div class="float">浮动元素</div>
+    </section>
+</body>
+</html>
