@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js去重</title>
+</head>
+<body>
+    <script>
+    // 1.1利用es5常规操作
+    //  思路:首先新建立一个新数组,然后遍历传入数组的每一个元素,将他和新数组的元素比较,如果indexof==-1,
+    //  则将他放入新数组里面
+    function deleteSame(arr){
+        var newarr = [];
+        for(var i =0;i<arr.length;i++){
+            if(newarr.indexOf(arr[i])==-1){
+                newarr.push(arr[i]);
+            }
+        }
+        return newarr;
+    }
+    var arr1 = [1,2,3,4,1];
+    console.log(deleteSame(arr1));
+
+
+    // 1.2不使用任何api完成
+    Array.prototype.arrUnique_for = function () { 
+        var res = [];
+        var sure = true;
+        for(var i=0;i<this.length;i++){
+            for(var j=0;j<res.length;j++){
+                if(this[i]==res[j]){
+                    sure=false;
+                    break;
+                }
+            }
+            // 只有sure为true才可以加入到新数组
+            if(sure){
+                res.push(this[i])
+            }
+            // 继续进行下一轮循环
+            sure = true;
+        }
+        return res;
+    }
+    var arr2 = [1,2,1,3,4,2,4]
+    console.log(arr2.arrUnique_for());
+
+
+    // 1.3删除数组条目中重复的条目，返回仅包含重复条目的新数组。
+    Array.prototype.delRepeat=function() {
+        // alert(this)
+        //tempRepeat保存重复数组项
+        var tempRepeat = [];
+        var obj = {}; //保存数组中每项，及其出现的次数
+        //遍历数组
+        // this表示实例
+        for (var i = 0; i < this.length; i++) {
+            if (obj[this[i]]) {
+                if(obj[this[i]]==1) {
+                    tempRepeat.push(this[i]);
+                    obj[this[i]]++;
+                    delete(this[i]);
+                }
+            }
+            else {
+                obj[this[i]] = 1;
+            }
+        }
+        this.filter(function(){ return true;});
+        return tempRepeat;
+    }
+    var a=[1,3,"eirkgm",4,6,"eirkgm",3,3,"eirkgm",3,3,3,"eirkgm",4];
+    console.log(a.delRepeat())
+    </script>
+</body>
+</html>
