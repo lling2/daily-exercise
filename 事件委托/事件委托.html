@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>事件代理/委托</title>
+</head>
+<body>
+    <!-- 事件委托原理:
+        事件委托是利用事件的冒泡原理来实现的 -->
+    <!-- 为什么使用事件委托/代理：
+        减少与dom的交互次数，提高性能； -->
+    <ul id="ul1">
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+        <li>444</li>
+    </ul>
+    <hr>
+    <div id="box">
+        <input type="button" id="add" value="添加" />
+        <input type="button" id="remove" value="删除" />
+        <input type="button" id="move" value="移动" />
+        <input type="button" id="select" value="选择" />
+    </div>
+    <hr>
+    <input type="button" name="" id="btn" value="添加" />
+    <ul id="ul11">
+        <li>111</li>
+        <li>222</li>
+        <li>333</li>
+        <li>444</li>
+    </ul>
+    <script>
+        // 利用普通方式
+        window.onload=function(){
+            var oUl = document.getElementById("ul1");
+            var aLi = oUl.getElementsByTagName('li');
+            for(var i = 0;i<aLi.length;i++){
+                aLi[i].onclick=function(){
+                    alert(11)
+                }
+            }
+        }
+        // 利用事件委托
+        window.onload=function(){
+            var oUl = document.getElementById("ul1");
+            oUl.onclick=function(){
+                alert(1111);
+            }
+        }
+
+        // Event对象提供了一个属性叫target，可以返回事件的目标节点，我们成为事件源，也就是说，target就可以表
+        // 示为当前的事件操作的dom，但是不是真正操作dom，当然，这个是有兼容性的，标准浏览器用ev.target，IE浏览器
+        // 用event.srcElement，此时只是获取了当前节点的位置，并不知道是什么节点名称，这里我们用nodeName来获取具体
+        // 是什么标签名，这个返回的是一个大写的，我们需要转成小写再做比较（习惯问题）：
+        window.onload=function(){
+            var oUl = document.getElementById("ul1");
+            oUl.onclick=function(ev){
+                var ev = ev || window.event;
+                var target = ev.target|| ev.srcElement;
+                if(target.nodeName.toLowerCase()=='li'){
+                    alert(11111111111);
+                }
+            }
+        }
+
+        // 每个li被点击的效果都不一样
+        window.onload=function(){
+            var oBox = document.getElementById("box");
+            oBox.onclick=function(ev){
+                var ev = ev || window.event;
+                var target = ev.target|| ev.srcElement;
+                if(target.nodeName.toLowerCase()=='input'){
+                    switch(target.id){
+                        case 'add':
+                            alert("add");
+                            break;
+                        case 'remove' :
+                            alert('删除');
+                            break;
+                        case 'move' :
+                            alert('移动');
+                            break;
+                        case 'select' :
+                            alert('选择');
+                            break;       
+                    }
+                }
+            }
+        }
+
+
+        // 用事件委托的方式，新添加的子元素是带有事件效果的
+        window.onload = function(){
+            var oBtn = document.getElementById("btn");
+            var oUl = document.getElementById("ul11");
+            var aLi = oUl.getElementsByTagName('li');
+            var num = 4;
+            function mhover(){
+                for(var i = 0;i<aLi.length;i++){
+                    aLi[i].onmouseover=function(){
+                        this.style.backgroundColor="red";
+                    }
+                    aLi[i].onmouseout=function(){
+                        this.style.backgroundColor="blue";
+                    }
+                }
+            }
+            mhover();
+            oBtn.onclick=function(){
+                num++;
+                var newli = document.createElement('li');
+                newli.innerHTML = 111*num;
+                oUl.appendChild(newli);
+                mhover();
+            }
+        }
+
+
+        // 
+        window.onload = function(){
+            var oBtn = document.getElementById("btn");
+            var oUl = document.getElementById("ul1");
+            var aLi = oUl.getElementsByTagName('li');
+            var num = 4;
+            
+            //事件委托，添加的子元素也有事件
+            oUl.onmouseover = function(ev){
+                var ev = ev || window.event;
+                var target = ev.target|| window.srcElement;
+                if(target.nodeName.toLowerCase=='li'){
+                    target.style.backgroundColor='red';
+                }
+            };
+            oUl.onmouseout = function(ev){
+                var ev = ev || window.event;
+                var target = ev.target || ev.srcElement;
+                if(target.nodeName.toLowerCase() == 'li'){
+                    target.style.background = "#fff";
+                }
+                
+            };
+            
+            //添加新节点
+            oBtn.onclick = function(){
+                num++;
+                var oLi = document.createElement('li');
+                oLi.innerHTML = 111*num;
+                oUl.appendChild(oLi);
+            };
+        }
+    </script>
+</body>
+</html>
