@@ -1,0 +1,10 @@
+常见的浏览器内核可以分四种：Trident、Gecko、Blink、Webkit
+IE浏览器	Trident内核，也成为IE内核
+Chrome浏览器	Webkit内核，现在是Blink内核
+Firefox浏览器	Gecko内核，俗称Firefox内核
+Safari浏览器	Webkit内核
+Opera浏览器	最初是自己的Presto内核，后来加入谷歌大军，从Webkit又到了Blink内核；
+360浏览器	IE+Chrome双内核
+猎豹浏览器	IE+Chrome双内核
+百度浏览器	IE内核
+QQ浏览器	Trident（兼容模式）+Webkit（高速模式）

@@ -1,0 +1,63 @@
+1、移动端开发需要加入的代码
+
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">  
+<meta name="viewport" content="initial-scale=1,  user-scalable=no",
+maximum-scale=1, minimum-scale=1>
+
+2、判断移动端还是PC端
+
+function browserRedirect() {
+    var ua= navigator.userAgent.toLowerCase();
+    var ipad= ua.match(/ipad/i) == "ipad";
+    var iphone= ua.match(/iphone os/i) == "iphone os";
+
+    var mid= ua.match(/midp/i) == "midp";   
+
+//midp，即Mobile Internet Device pad，一种新的“比智能电话大，比笔记本小”的互联网终端。
+
+    var uc7= ua.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var uc= ua.match(/ucweb/i) == "ucweb";
+    var android= ua.match(/android/i) == "android";
+    var ce= ua.match(/windows ce/i) == "windows ce";
+    var mobile= ua.match(/windows mobile/i) == "windows mobile";
+    if (ipad|| iphone|| mid|| uc7|| uc || android|| ce|| mobile) {
+        //跳转移动端页面
+        window.location.href="http://www.wanshaobo.com/mobile/index.html";
+    } else {
+        //跳转pc端页面
+        window.location.href="http://www.wanshaobo.com/index.html";
+    }
+}
+
+3、手机查看本地调试的html项目
+
+Android端和IOS端
+
+1、1px边框问题
+#ele:before{
+    content:'';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid #ccc;
+    width: 200%;
+    height: 200%;
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+}
+2、在移动端图片上传图片 使用accept="image/*" multiple,兼容低端机的问题
+3、使用 lib-flexible 实现H5页面适配
+
+Android端
+IOS端
+1、input标签，设置type=button属性，disabled设置true，会出现样式文字和背景异常问题
+解决方案：使用opacity=1
+2、有时对非可点击元素如(label,span）添加单机监听事件，不会触发
+解决方案：修改样式，cursor:pointer
+3、使用webview时，页面滚动卡顿
+解决方案：对webview设置更低的“减速率”
+self.webView.scrollView.decelerationRate = UIScrollViewDecelerationRateNormal;
