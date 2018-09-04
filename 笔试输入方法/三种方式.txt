@@ -1,0 +1,237 @@
+一、处理单行输入
+这是一种最最简单的输入了。看我先给个模板：
+
+模板
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.on('line', function(data) {
+    // 获取输入
+    var inputs = data.trim().split(' ');
+
+    // 处理
+    var result = deal(inputs);
+
+    // 输出结果
+    console.log(result);
+});
+
+
+function deal(inputs) {
+    var result = '';
+
+    // dosomething
+
+    return result;
+}
+　　
+
+案例--复制代码
+任意输出四个字符，按反例输出
+输入：
+asdf
+zxcv
+输出：
+fdsa
+vcxz
+-------------------------------------------
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.on('line', function(data) {
+    // 获取输入
+    var inputs = data;
+
+    // 处理
+    var result = deal(inputs);
+
+    // 输出结果
+    console.log(result);
+});
+
+
+function deal(inputs) {
+    var result = inputs.split("").reverse().join("");
+
+    // dosomething
+
+    return result;
+};
+
+--------------------------------------------------------------------------
+二、处理多行输入（一组的行数已确定）
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+var K = 1; // 输入K行（这里说一组有几行就是几）
+var inputs = [];
+rl.on('line', function(data) {
+    // 获取输入
+    inputs.push(data.trim());
+    if (K == inputs.length) { //
+        // 处理
+        var result = deal(inputs);
+
+        // 输出结果
+        console.log(result);
+        // 清0
+        inputs.length = 0;
+
+    }
+});
+function deal(inputs) {
+    var result = '';
+
+    // dosomething
+    return result;
+}
+
+-----------------------------------------
+案例--复制代码
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+var K = 2; // 输入K行
+var inputs = [];
+rl.on('line', function(data) {
+    // 获取输入
+    inputs.push(data.trim());
+    if (K == inputs.length) { //
+        // 处理
+        var result = deal(inputs);
+
+        // 输出结果
+        console.log(result);
+        // 清0
+        inputs.length = 0;
+
+    }
+});
+
+
+function deal(inputs) {
+    var result = [];
+
+    // dosomething
+    var s1 = inputs[0].split("");
+    var s2 = inputs[1].split("");
+    var len = s1.length;
+    for(var i = 0;i<len;i++){
+        result.push(s1[i]);
+        result.push(s2[len-i-1]);
+    }  
+    
+    return result.join("");
+}
+
+---------------------------------------------------------
+三、一组测试数据行数不确定（1+n模式）
+　　啥意思呢？就是说一组测试数据的第一行是一个数字n，然后后
+面有n行，这1+n行就是一组测试数据。模板给上：
+
+复制代码
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+var inputs = [];
+var num = 0;
+rl.on('line', function(data) {
+    if(num == 0){
+        num = Number(data.trim());
+    } else {
+        inputs.push(data.trim());
+        if (num == inputs.length) {
+            // 处理
+            var result = deal(inputs);
+
+            // 输出结果
+            console.log(result);
+
+            // 清0
+            inputs.length = 0;  //不可改动
+            num = 0;    //不可改动
+        }
+    }
+});
+
+function deal(inputs) {
+    var result = '';
+
+    // dosomething
+
+    return result;
+}
+
+---------------------------------
+案例--复制代码
+var readline = require('readline');
+
+rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+var inputs = [];
+var num = 0;
+rl.on('line', function(data) {
+    if(num == 0){
+        num = Number(data.trim());
+    } else {
+        inputs.push(data.trim());
+        if (num == inputs.length) {
+            // 处理
+            var result = deal(inputs);
+
+            // 输出结果
+            console.log(result);
+
+            // 清0
+            inputs.length = 0;  //不可改动
+            num = 0;    //不可改动
+        }
+    }
+});
+
+function deal(inputs) {
+    var result = 0;
+
+    // dosomething
+    var data = 
+    inputs.map(function(item){return parseInt(item.trim())}).sort(function(v1,v2){return v1-v2});
+    var len = data.length;
+    if(len%2==0){
+        var l = len/2;
+        result = Math.floor((data[l]+data[l-1])/2);
+    }else{
+        var l = (len-1)/2;
+        result = data[l]
+    }
+    
+    return result;
+}
+
+四、总结
+　　现在很多公司招聘都要线上笔试，如果说你是一个前端开发人员，而且不会java，c++等，那么你可以选择js，
+选择js的第一步是你要会处理数据，如果不会处理数据，无论你多么聪明，算法学得多好，js学得多好，对不起，笔试
+过不了。本人深受其害，所以决定研究一下这个东西，站在前人的肩膀上总结了上述方法，希望对你有所帮助。如果上
+面的内容对你有帮助的话，别忘了推荐一下，如果能关注一下我就更棒了。最后，祝你成功！
